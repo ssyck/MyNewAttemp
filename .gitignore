@@ -4,6 +4,5 @@
 
 # Игнорируем системные файлы операционных систем
 .DS_Store
-.htaccess
 .htpasswd
 Thumbs.db
