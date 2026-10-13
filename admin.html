@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель управления | Flat-File Shop</title>
+    <link href="data/client/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container d-flex align-items-center justify-content-center" id="loginBlock" style="min-height: 100vh;">
+        <div class="card shadow border-0 p-3" style="width: 100%; max-width: 380px;">
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <h4 class="fw-bold mt-2 text-dark">[ Защищенный Вход ]</h4>
+                    <p class="text-muted small">Введите учетные данные инженерного доступа</p>
+                </div>
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label class="form-label fw-medium">Логин инженера</label>
+                        <input type="text" class="form-control" id="loginUser" required placeholder="login" autofocus>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-medium">Инженерный пароль</label>
+                        <input type="password" class="form-control" id="loginPass" required placeholder="password">
+                    </div>
+                    <div class="d-grid mb-3">
+                        <button type="submit" id="loginBtn" class="btn btn-primary btn-lg fw-medium">Войти в панель</button>
+                    </div>
+                </form>
+                <div id="loginErrorAlert" class="alert alert-danger d-none small py-2" role="alert">
+                    Ошибка: <span id="loginErrorMessage"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-none" id="adminWorkzone">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="#">
+                    <span>FlatFile Shop <span class="badge bg-primary ms-2" style="font-size: 0.65rem;">v1.0</span></span>
+                </a>
+                <div class="navbar-nav ms-auto">
+                    <span class="navbar-text me-3 small text-white-50">Инженер: ssyck</span>
+                    <a class="nav-link text-danger fw-bold" href="#" id="logoutLink">Выйти</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-header bg-primary text-white py-3">
+                            <h5 class="card-title mb-0 fw-semibold">Транзакционный импорт товара</h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <form id="uploadForm">
+                                <div class="mb-4">
+                                    <label for="zipPackage" class="form-label fw-bold text-secondary">Выберите пакет товара (.zip)</label>
+                                    <input type="file" class="form-control" id="zipPackage" accept=".zip" required>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" id="submitBtn" class="btn btn-primary btn-lg fw-medium">
+                                        <span id="btnSpinner" class="spinner-border spinner-border-sm me-2 d-none"></span>
+                                        Запустить конвейер импорта
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="statusContainer" class="d-none">
+                        <div id="statusAlert" class="alert p-3 shadow-sm border-0" role="alert">
+                            <h6 class="alert-heading fw-bold mb-1" id="statusTitle">Статус обработки</h6>
+                            <div id="statusMessage" class="small"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-header bg-dark text-white py-3">
+                            <h6 class="card-title mb-0 fw-semibold">Системный статус сессии</h6>
+                        </div>
+                        <div class="card-body p-3">
+                            <ul class="list-group list-group-flush small">
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
+                                    <span class="text-muted">Тип авторизации</span>
+                                    <span class="badge bg-primary-subtle text-primary border border-primary rounded-pill px-2">PHP Session Storage</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
+                                    <span class="text-muted">Генератор ID</span>
+                                    <span class="badge bg-success-subtle text-success border border-success rounded-pill px-2">UUID v4</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const loginBlock = document.getElementById('loginBlock');
+        const adminWorkzone = document.getElementById('adminWorkzone');
+        const loginForm = document.getElementById('loginForm');
+        const uploadForm = document.getElementById('uploadForm');
+
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const errAlert = document.getElementById('loginErrorAlert');
+            const errMsg = document.getElementById('loginErrorMessage');
+            errAlert.classList.add('d-none');
+
+            const formData = new FormData();
+            formData.append('username', document.getElementById('loginUser').value);
+            formData.append('password', document.getElementById('loginPass').value);
+
+            try {
+                const response = await fetch('data/server/controllers/auth.php', { method: 'POST', body: formData });
+                const result = await response.json();
+
+                if (result.success) {
+                    loginBlock.classList.add('d-none');
+                    adminWorkzone.classList.remove('d-none');
+                } else {
+                    errAlert.classList.remove('d-none');
+                    errMsg.textContent = result.message;
+                }
+            } catch (error) {
+                errAlert.classList.remove('d-none');
+                errMsg.textContent = 'Системный сбой связи с бэкендом.';
+            }
+        });
+
+        uploadForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('zipPackage');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnSpinner = document.getElementById('btnSpinner');
+            const statusContainer = document.getElementById('statusContainer');
+            const statusAlert = document.getElementById('statusAlert');
+            const statusTitle = document.getElementById('statusTitle');
+            const statusMessage = document.getElementById('statusMessage');
+
+            submitBtn.disabled = true;
+            btnSpinner.classList.remove('d-none');
+            statusContainer.classList.add('d-none');
+
+            const formData = new FormData();
+            formData.append('zip_package', fileInput.files[0]);
+
+            try {
+                const response = await fetch('data/server/controllers/upload.php', { method: 'POST', body: formData });
+                
+                if (response.status === 403) {
+                    throw new Error('Сессия истекла или доступ заблокирован бэкендом.');
+                }
+
+                const responseText = await response.text();
+                let result;
+                
+                try {
+                    result = JSON.parse(responseText);
+                } catch (jsonError) {
+                    statusContainer.classList.remove('d-none');
+                    statusAlert.className = 'alert alert-warning p-3 shadow-sm border-0';
+                    statusTitle.textContent = 'Критический сбой PHP на бэкенде';
+                    statusMessage.innerHTML = `<div style="text-align:left; font-family:monospace; white-space:pre-wrap;">${responseText}</div>`;
+                    return;
+                }
+
+                statusContainer.classList.remove('d-none');
+
+                if (result.success) {
+                    statusAlert.className = 'alert alert-success p-3 shadow-sm border-0';
+                    statusTitle.textContent = 'Импорт успешно выполнен!';
+                    statusMessage.innerHTML = `
+                        • Наименование: ${result.data.name}<br>
+                        • Читаемый SKU: <span class="badge bg-dark">${result.data.sku}</span><br>
+                        • Сгенерированный UUID: <small class="font-monospace text-secondary">${result.data.uuid}</small>
+                    `;
+                    fileInput.value = '';
+                } else {
+                    statusAlert.className = 'alert alert-danger p-3 shadow-sm border-0';
+                    statusTitle.textContent = 'Откат транзакции (Rollback)';
+                    statusMessage.textContent = result.message;
+                }
+            } catch (error) {
+                statusContainer.classList.remove('d-none');
+                statusAlert.className = 'alert alert-danger p-3 shadow-sm border-0';
+                statusTitle.textContent = 'Ошибка выполнения конвейера';
+                statusMessage.textContent = error.message || 'Ошибка передачи данных.';
+            } finally {
+                submitBtn.disabled = false;
+                btnSpinner.classList.add('d-none');
+                }
+});
+document.getElementById('logoutLink').addEventListener('click', function(e) {
+e.preventDefault();
+window.location.reload();
+});

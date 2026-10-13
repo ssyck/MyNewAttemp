@@ -1,6 +1,0 @@
-AuthType Basic
-AuthName "Инженерный доступ | FlatFile Shop"
-
-# Apache сам подставит путь к текущей папке вместо %{DOCUMENT_ROOT}
-AuthUserFile "%{DOCUMENT_ROOT}/MyNewAttemp/data/server/.htpasswd"
-Require valid-user
