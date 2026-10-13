@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Engineer Zone"
+AuthUserFile "C:/xampp/htdocs/MyNewAttemp/data/server/.htpasswd"
+Require valid-user
