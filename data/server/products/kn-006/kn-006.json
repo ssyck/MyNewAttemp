@@ -27,7 +27,7 @@
             }
         }
     },
-    "uuid": "18b2a7ab-38f5-00c8-23a8-1c8477e91acc",
+    "uuid": "ffc8bb6c-cdf9-015a-11ed-77ed5f88d89f",
     "media": {
         "main_image": "kn-006-001.webp",
         "all_images": [
@@ -37,7 +37,7 @@
         "video_url": ""
     },
     "system_meta": {
-        "imported_at": "13.10.2026 22:47:28",
+        "imported_at": "14.10.2026 19:27:29",
         "operator": "ssyck",
         "lifecycle": "initialized"
     }

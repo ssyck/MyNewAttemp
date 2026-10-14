@@ -221,7 +221,10 @@ function hasAccess($menuId) {
                         <label class="form-label fw-semibold">Пакет товара</label>
                         <input class="form-control" type="file" id="zip_package">
                     </div>
-                    <button class="btn btn-primary col-md-3">Запустить конвейер импорта</button>
+                    <!-- Кнопка с прописанным вызовом JS-скрипта -->
+                    <button onclick="запуститьИмпортТовара()" class="btn btn-primary col-md-3">
+                        <i class="bi bi-box-arrow-in-down me-1"></i>Запустить конвейер импорта
+                    </button>
                 </div>
             </section>
             <?php endif; ?>
@@ -264,32 +267,83 @@ function hasAccess($menuId) {
 
 <!-- ПОДКЛЮЧАЕМ СКРИПТЫ ЛОКАЛЬНО ИЗ ВАШЕЙ ПАПКИ ASSETS -->
 <script src="assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="assets/js/dashboard.js?v=<?= time(); ?>"></script>
 <script>
     // Функция визуального переключения секций
     function switchSection(sectionId, element) {
-        // Скрываем абсолютно все секции, включая стартовый экран приветствия
-        document.querySelectorAll('main section').forEach(sec => sec.classList.add('hidden-section'));
-        
-        // Снимаем подсветку со всех кнопок бокового меню
-        document.querySelectorAll('#main-sidebar-menu .nav-link').forEach(link => link.classList.remove('active'));
-        
-        // Отображаем выбранный блок
-        const targetSection = document.getElementById(`section-${sectionId}`);
-        if (targetSection) {
-            targetSection.classList.remove('hidden-section');
-        }
-        
-        // Подсвечиваем активный пункт в сайдбаре
-        if (element) {
-            element.classList.add('active');
-            document.getElementById('current-section-title').innerText = element.innerText.trim();
+    // 1. Скрываем все блоки контента
+    document.querySelectorAll('main section').forEach(sec => sec.classList.add('hidden-section'));
+    
+    // 2. Снимаем подсветку со всех пунктов меню
+    document.querySelectorAll('#main-sidebar-menu .nav-link').forEach(link => link.classList.remove('active'));
+    
+    // 3. Отображаем выбранную вкладку
+    const targetSection = document.getElementById(`section-${sectionId}`);
+    if (targetSection) {
+        targetSection.classList.remove('hidden-section');
+    }
+    
+    // ИСПРАВЛЕНО: Если суперадмин нажал «Администрирование», принудительно запускаем загрузку из dashboard.js
+    if (sectionId === 'admin_panel') {
+        if (typeof загрузитьРеестрСотрудников === 'function') {
+            загрузитьРеестрСотрудников();
+        } else {
+            console.error("Ошибка: функция загрузитьРеестрСотрудников не найдена. Проверьте, подключен ли assets/js/dashboard.js");
         }
     }
+    
+    // 4. Подсвечиваем активный пункт синим цветом
+    if (element) {
+        element.classList.add('active');
+        document.getElementById('current-section-title').innerText = element.innerText.trim();
+    }
+}
 
     // При первой загрузке страницы просто оставляем экран приветствия активным
     document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('current-section-title').innerText = 'Главный дашборд';
     });
 </script>
+
+<!-- КРАСИВОЕ МОДАЛЬНОЕ ОКНО ДЛЯ ВЫДАЧИ ПАРОЛЕЙ (BOOTSTRAP 5) -->
+<div class="modal fade" id="passwordCredentialsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title fw-bold" id="passwordModalLabel">
+                    <i class="bi bi-key-fill me-2"></i>Доступ сотрудника сгенерирован
+                </h5>
+            </div>
+            <div class="modal-body p-4">
+                <p class="text-muted small mb-3">Учетная запись успешно активирована в Apache и роли зафиксированы. Передайте эти данные сотруднику для входа:</p>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-dark small">Логин оператора</label>
+                    <input type="text" id="modal-display-username" class="form-control bg-light fw-bold" readonly>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-dark small">Временный пароль</label>
+                    <div class="input-group">
+                        <input type="text" id="modal-display-password" class="form-control fw-bold text-danger border-danger" style="font-family: monospace; letter-spacing: 1px;" readonly>
+                        <button class="btn btn-outline-danger" type="button" id="btn-copy-password" onclick="скопироватьПарольИзМодалки()">
+                            <i class="bi bi-clipboard-plus"></i> Копировать
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="alert alert-warning border-0 small mb-0 py-2 d-flex align-items-center">
+                    <i class="bi bi-exclamation-triangle-fill text-warning me-2 fs-5"></i>
+                    <span>Пароль показывается <strong>один раз</strong>. После закрытия окна восстановить его в чистом виде будет невозможно.</span>
+                </div>
+            </div>
+            <div class="modal-footer bg-light border-0">
+                <button type="button" class="btn btn-secondary fw-semibold px-4" data-bs-dismiss="modal">Я записал, закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>

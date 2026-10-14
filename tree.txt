@@ -1,0 +1,63 @@
+‘âàãªâãà  ¯ ¯®ª
+‘¥à¨©­ë© ­®¬¥à â®¬ : F8E5-8249
+C:.
+³   .gitignore
+³   .htaccess
+³   admin.php
+³   config.ini
+³   index.php
+³   
+ÃÄÄÄassets
+³   ÃÄÄÄcss
+³   ³   ÃÄÄÄbootstrap
+³   ³   ³       bootstrap.min.css
+³   ³   ³       
+³   ³   ÀÄÄÄicons
+³   ³           bootstrap-icons.css
+³   ³           
+³   ÃÄÄÄimg
+³   ³       no-photo.webp
+³   ³       
+³   ÀÄÄÄjs
+³       ³   dashboard.js
+³       ³   
+³       ÀÄÄÄbootstrap
+³               bootstrap.bundle.min.js
+³               
+ÃÄÄÄdata
+³   ÃÄÄÄclient
+³   ³       .gitkeep
+³   ³       
+³   ÃÄÄÄserver
+³   ³   ³   -admin.html
+³   ³   ³   .htpasswd
+³   ³   ³   
+³   ³   ÃÄÄÄcontrollers
+³   ³   ³       .gitkeep
+³   ³   ³       admin_control.php
+³   ³   ³       debug_import.log
+³   ³   ³       upload.php
+³   ³   ³       upload_01.php
+³   ³   ³       
+³   ³   ÃÄÄÄmodels
+³   ³   ³       .gitkeep
+³   ³   ³       
+³   ³   ÃÄÄÄorders
+³   ³   ³       .gitkeep
+³   ³   ³       
+³   ³   ÃÄÄÄproducts
+³   ³   ³   ³   .gitkeep
+³   ³   ³   ³   
+³   ³   ³   ÀÄÄÄkn-006
+³   ³   ³           kn-006-001.webp
+³   ³   ³           kn-006-002.webp
+³   ³   ³           kn-006.json
+³   ³   ³           
+³   ³   ÀÄÄÄsystem
+³   ³           .gitkeep
+³   ³           .htaccess
+³   ³           roles_registry.json
+³   ³           sku_registry.json
+³   ³           
+³               
+ÀÄÄÄtmp
