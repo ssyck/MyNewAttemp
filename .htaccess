@@ -1,0 +1,6 @@
+# Активируем базовую авторизацию через веб-сервер Apache
+AuthType Basic
+AuthName "Инженерная Панель MyNewAttemp"
+# Указываем Apache, где искать файл с паролями сотрудников
+AuthUserFile "C:/xampp/htdocs/MyNewAttemp/data/server/system/.htpasswd"
+Require valid-user

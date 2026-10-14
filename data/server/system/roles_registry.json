@@ -1,0 +1,19 @@
+{
+    "ssyck": {
+    "role": "Главный Суперадмин",
+    "is_active": true,
+    "allowed_menus": [
+      "admin_panel",
+      "import_pipeline",
+      "tech_passport",
+      "accounting",
+      "sys_logs"
+    ]
+  },
+  
+    "ivan": {
+        "role": "Новый сотрудник (Ожидает проверки)",
+        "is_active": false,
+        "allowed_menus": []
+    }
+}
