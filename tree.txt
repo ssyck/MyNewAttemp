@@ -1,63 +1,31 @@
-������� �����
-��਩�� ����� ⮬�: F8E5-8249
-C:.
-�   .gitignore
-�   .htaccess
-�   admin.php
-�   config.ini
-�   index.php
-�   
-����assets
-�   ����css
-�   �   ����bootstrap
-�   �   �       bootstrap.min.css
-�   �   �       
-�   �   ����icons
-�   �           bootstrap-icons.css
-�   �           
-�   ����img
-�   �       no-photo.webp
-�   �       
-�   ����js
-�       �   dashboard.js
-�       �   
-�       ����bootstrap
-�               bootstrap.bundle.min.js
-�               
-����data
-�   ����client
-�   �       .gitkeep
-�   �       
-�   ����server
-�   �   �   -admin.html
-�   �   �   .htpasswd
-�   �   �   
-�   �   ����controllers
-�   �   �       .gitkeep
-�   �   �       admin_control.php
-�   �   �       debug_import.log
-�   �   �       upload.php
-�   �   �       upload_01.php
-�   �   �       
-�   �   ����models
-�   �   �       .gitkeep
-�   �   �       
-�   �   ����orders
-�   �   �       .gitkeep
-�   �   �       
-�   �   ����products
-�   �   �   �   .gitkeep
-�   �   �   �   
-�   �   �   ����kn-006
-�   �   �           kn-006-001.webp
-�   �   �           kn-006-002.webp
-�   �   �           kn-006.json
-�   �   �           
-�   �   ����system
-�   �           .gitkeep
-�   �           .htaccess
-�   �           roles_registry.json
-�   �           sku_registry.json
-�   �           
-�               
-����tmp
+MyNewAttemp/
+├── app/                        # Закрытый контур (Private)
+│   ├── config/
+│   │   └── config.php          # Глобальные пути и константы
+│   │
+│   ├── controllers/            # МЕСТО ДЛЯ ИСПОЛНЯЕМЫХ СКРИПТОВ PHP
+│   │   ├── AdminController.php     # Управление доступом сотрудников
+│   │   ├── ImportController.php    # Конвейер импорта и транзакций
+│   │   ├── CatalogController.php   # Логика работы с товарами и моделями
+│   │   └── OrderController.php     # Логика создания и обработки заказов
+│   │
+│   └── data/                   # ХРАНИЛИЩЕ ДАННЫХ (БАЗА НА JSON-ФАЙЛАХ)
+│       │
+│       ├── products/           # Данные о товарах (Запчасти и Аксессуары)
+│       │   ├── categories.json # Дерево категорий каталога
+│       │   └── registry.json   # Главный реестр товаров (SKU, цены, остатки)
+│       │
+│       ├── models/             # Данные о моделях техники
+│       │   ├── brands.json     # Бренды (Samsung, Bosch, Apple и т.д.)
+│       │   └── models.json     # Конкретные модели и их связи с запчастями
+│       │
+│       ├── orders/             # Данные о заказах в иерархии Год -> Месяц -> Дата
+│       │   └── 2026/
+│       │       └── 10/
+│       │           └── 2026-10-15.json # Все заказы за конкретный день
+│       │
+│       └── system/             # Системное хранилище
+│           ├── roles.json      # Матрица прав и сотрудников «на лету»
+│           └── secrets.php     # Хэши паролей, ключи шифрования, системные соли
+│
+└── public/                     # Публичный контур (Assets, Media)
