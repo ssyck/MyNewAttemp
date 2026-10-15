@@ -15,7 +15,7 @@ Require valid-user
 Options -Indexes
 
 # Запрещаем переопределение критических директив через дочерние скрипты
-AllowOverride None
+# AllowOverride None
 
 # Кодировка по умолчанию для этой зоны, чтобы логи и таблицы не ломали шрифты
 AddDefaultCharset UTF-8

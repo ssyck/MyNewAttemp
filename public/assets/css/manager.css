@@ -1,0 +1,18 @@
+/* Убираем стандартное синее окрашивание раскрытой кнопки Bootstrap 5 */
+.accordion-button:not(.collapsed) {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+    box-shadow: none !important;
+}
+
+/* Гасим дефолтное свечение при фокусе (клике) на заголовки меню */
+.accordion-button:focus {
+    box-shadow: none !important;
+    border-color: rgba(0, 0, 0, 0.125) !important;
+}
+
+/* Небольшой отступ для подразделов меню для лучшей читаемости */
+.accordion-body .list-group-item.active {
+    background-color: #212529 !important;
+    border-color: #212529 !important;
+}

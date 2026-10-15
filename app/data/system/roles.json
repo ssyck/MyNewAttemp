@@ -1,15 +1,19 @@
 {
-  "menu_manifest": {
-    "ad": "Администрирование",
-    "im": "Конвейер разбора (CSV/ZIP)",
-    "ca": "Каталог деталей и моделей",
-    "ac": "Бухгалтерия и цены"
-  },
-  "staff_registry": {
-    "ssyck": {
-      "role": "Главный Суперадмин",
-      "is_active": true,
-      "allowed_menus": ["ad", "im", "ca", "ac"]
+    "menu_manifest": {
+        "ad": "Администрирование",
+        "im": "Конвейер разбора (CSV\/ZIP)",
+        "ca": "Каталог деталей и моделей",
+        "ac": "Бухгалтерия и цены"
+    },
+    "staff_registry": {
+        "ssyck": {
+            "role": "Главный Суперадмин",
+            "is_active": true,
+            "allowed_menus": [
+                "ad",
+                "im",
+                "ca"
+            ]
+        }
     }
-  }
 }

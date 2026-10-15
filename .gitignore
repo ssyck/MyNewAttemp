@@ -6,3 +6,6 @@
 .DS_Store
 .htpasswd
 Thumbs.db
+
+/data/*
+/Z_old_1/*

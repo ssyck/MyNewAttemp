@@ -39,8 +39,10 @@ MyNewAttemp/
     │
     ├── assets/              # Статические ресурсы фронтенда
     │   ├── css/
-    │   ├── js/
-    │   └── vendor/          # Сюда позже распакуем Bootstrap 5 локально
+    │   │   └── bootstrap5/  # Ресурсы CSS Bootstrap5
+    │   │
+    │   └── js/
+    │       └── bootstrap5/  # Ресурсы JS Bootstrap5
     │
     ├── media/               # Медиа-хранилище фронтенда
     │   └── system/          # Логотипы и заглушки панели
