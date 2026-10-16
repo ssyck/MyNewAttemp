@@ -33,7 +33,7 @@ function run_admin_controller(string $operation): void
         $_SESSION['flash_message'] = '<div class="alert alert-success py-2 shadow-sm">💾 Изменения успешно сохранены! Страница обновлена.</div>';
 
         // АВТОМАТИЧЕСКИЙ ПЕРЕРЕНДЕР: отправляем браузер на чистый GET-запрос этой же страницы
-        header('Location: ?mod=ad&op=roles');
+        header('Location: ?mod=ad&op=roles&t=' . time());
         exit(); // Намертво обрываем выполнение POST-потока
     }
 

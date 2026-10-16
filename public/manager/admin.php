@@ -5,6 +5,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// НАДЖЕСТКИЙ ЗАПРЕТ КЭШИРОВАНИЯ ДЛЯ БРАУЗЕРА:
+header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
+header("Pragma: no-cache");                                   // HTTP 1.0
+header("Expires: 0");                                          // Прокси
+
 require_once dirname(__DIR__, 2) . '/app/config/config.php';
 require_once PRIVATE_PATH . 'core/auth.php';
 
