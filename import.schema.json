@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org",
+  "title": "MyNewAttempEngine_Product_Schema",
+  "type": "object",
+  
+  "required": ["sku", "name", "category", "lifecycle"],
+  
+  "properties": {
+    "sku": {
+      "type": "string",
+      "description": "Уникальный артикул товара. Имя JSON-файла на диске."
+    },
+    "name": {
+      "type": "string",
+      "description": "Человекопонятное наименование запчасти."
+    },
+    "category": {
+      "type": "string",
+      "description": "Категория товара для навигации в каталоге."
+    },
+    "lifecycle": {
+      "type": "string",
+      "enum": ["draft", "active", "archived"],
+      "default": "draft",
+      "description": "Статус. Значение по умолчанию — draft (завести в систему можно)."
+    },
+    "price": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Числовое значение цены. Валюта берется из глобального конфига."
+      
+    },
+    "dimensions": {
+      "type": "object",
+      "description": "Логистические параметры упаковки. Обязательны для продаж.",
+      "properties": {
+        "width_mm": { "type": "integer", "exclusiveMinimum": 0, "description": "Ширина в мм (больше 0)" },
+        "height_mm": { "type": "integer", "exclusiveMinimum": 0, "description": "Высота в мм (больше 0)" },
+        "length_mm": { "type": "integer", "exclusiveMinimum": 0, "description": "Длина в мм (больше 0)" },
+        "weight_g": { "type": "integer", "exclusiveMinimum": 0, "description": "Вес в граммах (больше 0)" }
+      },
+      "required": ["width_mm", "height_mm", "length_mm", "weight_g"]
+    },
+    "dependent_parameters": {
+      "type": "object",
+      "description": "Динамический контур физических характеристик (Параметрический Замок или Ключик)."
+    },
+    "free_parameters": {
+      "type": "object",
+      "description": "Динамический контур физических характеристик (Свободные от связей)."
+    },
+  },
+
+  "comment": "БИЗНЕС-ПРАВИЛО: Если статус active (продать можно), блок dimensions становится жестко обязательным",
+  "if": {
+    "properties": { "lifecycle": { "const": "active" } }
+  },
+  "then": {
+    "required": ["dimensions"]
+  }
+}

@@ -15,13 +15,16 @@ $configIni = file_exists($iniPath) ? parse_ini_file($iniPath, true) : [];
 date_default_timezone_set($configIni['system']['timezone'] ?? 'Europe/Moscow');
 
 // Управление отображением ошибок бэкенда на основе debug_mode
-if (($configIni['system']['debug_mode'] ?? 1) === 1) {
+if (intval($configIni['system']['debug_mode'] ?? 1) === 1) {
     ini_set('display_errors', '1');
     error_reporting(E_ALL);
 } else {
     ini_set('display_errors', '0');
     error_reporting(0);
 }
+
+// 🔥 ДОБАВЛЕНО: Единая системная валюта из секции [system] вашего config.ini
+define('SYSTEM_CURRENCY', trim($configIni['system']['CURRENCY'] ?? 'руб'));
 
 // 3. Абсолютные пути к папкам данных и контроллеров закрытого контура
 define('CONTROLLERS_PATH', PRIVATE_PATH . 'controllers/');
@@ -30,6 +33,9 @@ define('PRODUCTS_DATA', DATA_PATH . 'products/');
 define('MODELS_DATA', DATA_PATH . 'models/');
 define('ORDERS_DATA', DATA_PATH . 'orders/');
 define('SYSTEM_DATA', DATA_PATH . 'system/');
+
+// 🔥 ДОБАВЛЕНО: Прямой путь к единому реестру товаров (согласно Манифесту 2.0)
+define('REGISTRY_PATH', PRODUCTS_DATA . 'registry.json');
 
 // 4. Веб-пути для браузера (URL-адреса ресурсов)
 define('URL_BASE', '/MyNewAttemp/public/');
@@ -45,7 +51,7 @@ define('SYSTEM_MENUS', [
     'ad' => [
         'title' => 'Администрирование',
         'submenu' => [
-            'roles' => 'Редактор ролей' // Наша строка подменю!
+            'roles' => 'Редактор ролей'
         ]
     ],
     'im' => [
