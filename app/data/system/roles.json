@@ -11,7 +11,9 @@
             "is_active": true,
             "allowed_menus": [
                 "ad",
-                "im"
+                "im",
+                "ca",
+                "ac"
             ]
         }
     }
