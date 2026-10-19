@@ -1,0 +1,28 @@
+{
+    "menu_manifest": {
+        "ad": {
+            "title": "Администрирование",
+            "submenu": {
+                "roles": {
+                    "title": "Редактор ролей",
+                    "action": "roles",
+                    "is_system": true
+                },
+                "pm": {
+                    "title": "Менеджер плагинов",
+                    "action": "pm",
+                    "is_system": true
+                }
+            }
+        }
+    },
+    "staff_registry": {
+        "ssyck": {
+            "role": "Главный Суперадмин",
+            "is_active": true,
+            "allowed_menus": [
+                "ad"
+            ]
+        }
+    }
+}

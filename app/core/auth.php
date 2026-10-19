@@ -21,7 +21,7 @@ function authenticate_user(): array
         exit('Ошибка безопасности: Пользователь Apache не определен.');
     }
 
-    $rolesJsonPath = SYSTEM_DATA . 'roles.json';
+    $rolesJsonPath = SYSTEM_DATA . 'user_role.json';
     
     // Если критически важный файл реестра сотрудников физически отсутствует на диске
     if (!file_exists($rolesJsonPath)) {

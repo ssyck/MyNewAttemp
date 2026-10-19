@@ -1,0 +1,6 @@
+{
+    "title": "Менеджер плагинов",
+    "action": "plugins",
+    "path": ["ad", "pm"],
+    "is_system": true
+}

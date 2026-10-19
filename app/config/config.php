@@ -29,6 +29,7 @@ define('SYSTEM_CURRENCY', trim($configIni['system']['CURRENCY'] ?? 'руб'));
 // 3. Абсолютные пути к папкам данных и контроллеров закрытого контура
 define('CONTROLLERS_PATH', PRIVATE_PATH . 'controllers/');
 define('DATA_PATH', PRIVATE_PATH . 'data/');
+define('VIEWS_PATH',       PRIVATE_PATH . 'views/');
 define('PRODUCTS_DATA', DATA_PATH . 'products/');
 define('MODELS_DATA', DATA_PATH . 'models/');
 define('ORDERS_DATA', DATA_PATH . 'orders/');
@@ -46,30 +47,29 @@ define('URL_MANAGER_CSS', URL_ASSETS . 'css/manager.css');
 define('URL_BOOTSTRAP_CSS', URL_ASSETS . 'css/bootstrap5/bootstrap.min.css');
 define('URL_BOOTSTRAP_JS', URL_ASSETS . 'js/bootstrap5/bootstrap.bundle.min.js');
 
-// 5. ОФИЦИАЛЬНЫЙ МАНИФЕСТ МЕНЮ (Чистый текст, короткие ключи, без иконок)
-define('SYSTEM_MENUS', [
-    'ad' => [
-        'title' => 'Администрирование',
-        'submenu' => [
-            'roles' => 'Редактор ролей'
+// =========================================================================
+// 5. ДИНАМИЧЕСКИЙ МАНИФЕСТ МЕНЮ (Сборка из user_role.json)
+// =========================================================================
+$userRoleJsonFile = SYSTEM_DATA . 'user_role.json';
+$dynamicMenus = [];
+
+if (file_exists($userRoleJsonFile)) {
+    $rolesDb = json_decode(file_get_contents($userRoleJsonFile), true);
+    if (!empty($rolesDb['menu_manifest']) && is_array($rolesDb['menu_manifest'])) {
+        $dynamicMenus = $rolesDb['menu_manifest'];
+    }
+}
+
+// Предохранитель: если файл пуст, выдаем "нулевого пациента" в память
+if (empty($dynamicMenus)) {
+    $dynamicMenus = [
+        'ad' => [
+            'title' => 'Администрирование',
+            'items' => [
+                'roles' => ['title' => 'Редактор ролей', 'action' => 'roles']
+            ]
         ]
-    ],
-    'im' => [
-        'title' => 'Конвейер разбора (CSV/ZIP)',
-        'submenu' => [
-            'upload' => 'Загрузка пакета'
-        ]
-    ],
-    'ca' => [
-        'title' => 'Каталог деталей и моделей',
-        'submenu' => [
-            'parts' => 'База запчастей'
-        ]
-    ],
-    'ac' => [
-        'title' => 'Бухгалтерия и цены',
-        'submenu' => [
-            'prices' => 'Управление ценами'
-        ]
-    ]
-]);
+    ];
+}
+
+define('SYSTEM_MENUS', $dynamicMenus);

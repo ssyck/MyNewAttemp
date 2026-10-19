@@ -1,0 +1,63 @@
+MyNewAttemp
+
+app
+	config
+		config.php
+	controllers
+		AdminController.php
+	core
+		auth.php
+	data
+		models
+			bosch
+				Мясорубки
+					MFWS440B
+						_mfws440b.json
+						mfws440b_main.webp
+						mfws440b.video.txt
+						new440-img1.webp
+						ott.webp
+		orders
+			20261018
+				20261018-001.json
+				20261018-002.json
+		products
+			kn-0184
+				_kn-0184.json
+				kn-0184.main.webp
+				kn-0184.video.txt
+				kn-0184334.webp			
+		system
+			menu
+				ad
+					pm
+						action.json
+					roles
+						action.json
+			.htpasswd
+			user_role.json
+	views
+public
+	assets
+		css
+			bootstrap5
+				bootstrap.min.css
+			manager.css
+		js
+			bootstrap5
+				bootstrap.bundle.min.js
+		media
+			img
+				favicon.ico
+				no_photo.webp
+			sound
+				hello.wav
+			video
+				back.webm
+	manager
+		.htaccess
+		admin.php
+tmp
+.gitignore
+architecture.md
+config.ini

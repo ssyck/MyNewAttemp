@@ -1,0 +1,6 @@
+{
+    "title": "Редактор ролей",
+    "action": "roles",
+    "path": ["ad", "roles"],
+    "is_system": true
+}
